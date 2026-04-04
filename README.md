@@ -27,4 +27,5 @@ All settings are available in the LethalConfig menu in-game.
 
 ## Compatibility
 This mod should work alongside most other mods.
+
 Compatible with the [ReservedUtilitySlot](https://thunderstore.io/c/lethal-company/p/FlipMods/ReservedUtilitySlot/) mod
