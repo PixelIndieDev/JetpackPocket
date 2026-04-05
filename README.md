@@ -22,7 +22,6 @@ All settings are available in the LethalConfig menu in-game.
 | ------------- | ------------- |
 | Carry multiple two-handed items | false |
 
-> [!IMPORTANT]
 > All players in the lobby are required to have the `JetpackPocket` mod installed. Clients without the mod will receive an generic "an error occurred" message and be sent back to the main menu.
 
 ## Compatibility
