@@ -49,6 +49,13 @@ namespace JetpackPocket
                     newState.HasTwoHandedItem++;
                 }
             }
+
+            //utility slot check
+            if (IsJetpack(player.ItemOnlySlot))
+            {
+                newState.HasJetpack = true;
+            }
+
             SaveState(player.playerClientId, newState);
         }
 

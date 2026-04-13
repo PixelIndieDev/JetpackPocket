@@ -25,6 +25,8 @@ All settings are available in the LethalConfig menu in-game.
 > All players in the lobby are required to have the `JetpackPocket` mod installed. Clients without the mod will receive an generic "an error occurred" message and be sent back to the main menu.
 
 ## Compatibility
-This mod should work alongside most other mods.
+Works for V81
 
+This mod should work alongside most other mods.
 Compatible with the [ReservedUtilitySlot](https://thunderstore.io/c/lethal-company/p/FlipMods/ReservedUtilitySlot/) mod
+> Note: You might need to scroll away from your two-handed item before you can select a reserved utility slot

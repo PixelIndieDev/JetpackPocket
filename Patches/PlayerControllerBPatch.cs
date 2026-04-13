@@ -1,4 +1,5 @@
-﻿using GameNetcodeStuff;
+﻿using BepInEx.Logging;
+using GameNetcodeStuff;
 using HarmonyLib;
 using UnityEngine;
 
@@ -50,8 +51,24 @@ namespace JetpackPocket.Patches
 
         // item scrolling/switching
         [HarmonyPatch("ScrollMouse_performed")]
-        [HarmonyPostfix]
+        [HarmonyPrefix]
         static void ScrollPatch(PlayerControllerB __instance)
+        {
+            if (!__instance.IsOwner || !__instance.isPlayerControlled) return;
+
+            if (__instance.inTerminalMenu) return;
+
+            if (__instance.twoHanded && JetpackHelper.HasJetpack(__instance))
+            {
+                __instance.twoHanded = false;
+            }
+
+            UpdateHUD(__instance);
+        }
+
+        [HarmonyPatch("UseUtilitySlot_performed")]
+        [HarmonyPrefix]
+        static void tabPatch(PlayerControllerB __instance)
         {
             if (!__instance.IsOwner || !__instance.isPlayerControlled) return;
 
@@ -100,6 +117,14 @@ namespace JetpackPocket.Patches
         private static void UpdateHUD(PlayerControllerB __instance)
         {
             HUDManager.Instance.holdingTwoHandedItem.enabled = JetpackHelper.HasTwoHanded(__instance) && !JetpackPocketPatchBase.instance.JetpackPocketConfigEntry.Value;
+        }
+
+        [HarmonyPatch("SwitchToItemSlot")]
+        [HarmonyPostfix]
+        static void SwitchToItem(PlayerControllerB __instance)
+        {
+            JetpackHelper.Rescan(__instance);
+            UpdateHUD(__instance);
         }
     }
 }

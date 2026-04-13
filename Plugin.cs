@@ -17,7 +17,7 @@ namespace JetpackPocket
         public static JetpackPocketPatchBase instance;
         public ConfigEntry<bool> JetpackPocketConfigEntry;
 
-        internal ManualLogSource logSource;
+        internal static ManualLogSource logSource;
 
         void Awake()
         {
