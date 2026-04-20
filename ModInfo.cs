@@ -4,6 +4,6 @@
     {
         internal const string modGUID = "PixelIndieDev_JetpackPocket";
         internal const string modName = "Jetpack Pocket";
-        internal const string modVersion = "1.1.0.0";
+        internal const string modVersion = "1.2.0.0";
     }
 }

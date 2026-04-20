@@ -1,6 +1,6 @@
 {
   "name": "JetpackPocket",
-  "version_number": "1.1.0",
+  "version_number": "1.2.0",
   "website_url": "https://github.com/PixelIndieDev/JetpackPocket",
   "description": "A simple mod that allows you to switch items while carrying a two-handed item, as long as you have a jetpack in your inventory",
   "dependencies": [

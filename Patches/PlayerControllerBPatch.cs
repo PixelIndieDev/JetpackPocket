@@ -11,6 +11,7 @@ namespace JetpackPocket.Patches
         // item switch states
         [HarmonyPatch("GrabObjectClientRpc")]
         [HarmonyPostfix]
+        [HarmonyPriority(Priority.Last)]
         static void GrabObjectClientRpcPatch(PlayerControllerB __instance)
         {
             JetpackHelper.Rescan(__instance);
@@ -19,6 +20,7 @@ namespace JetpackPocket.Patches
 
         [HarmonyPatch("ThrowObjectClientRpc")]
         [HarmonyPostfix]
+        [HarmonyPriority(Priority.Last)]
         static void ThrowObjectClientRpcPatch(PlayerControllerB __instance)
         {
             JetpackHelper.Rescan(__instance);
@@ -27,6 +29,7 @@ namespace JetpackPocket.Patches
 
         [HarmonyPatch("PlaceObjectClientRpc")]
         [HarmonyPostfix]
+        [HarmonyPriority(Priority.Last)]
         static void PlaceObjectClientRpcPatch(PlayerControllerB __instance)
         {
             JetpackHelper.Rescan(__instance);
@@ -35,6 +38,7 @@ namespace JetpackPocket.Patches
 
         [HarmonyPatch("DropAllHeldItems")]
         [HarmonyPostfix]
+        [HarmonyPriority(Priority.Last)]
         static void DropAllHeldItemsPatch(PlayerControllerB __instance)
         {
             JetpackHelper.Rescan(__instance);
@@ -43,6 +47,7 @@ namespace JetpackPocket.Patches
 
         [HarmonyPatch("DespawnHeldObjectClientRpc")]
         [HarmonyPostfix]
+        [HarmonyPriority(Priority.Last)]
         static void DespawnHeldObjectClientRpcPatch(PlayerControllerB __instance)
         {
             JetpackHelper.Rescan(__instance);
@@ -52,6 +57,7 @@ namespace JetpackPocket.Patches
         // item scrolling/switching
         [HarmonyPatch("ScrollMouse_performed")]
         [HarmonyPrefix]
+        [HarmonyPriority(Priority.Last)]
         static void ScrollPatch(PlayerControllerB __instance)
         {
             if (!__instance.IsOwner || !__instance.isPlayerControlled) return;
@@ -68,6 +74,7 @@ namespace JetpackPocket.Patches
 
         [HarmonyPatch("UseUtilitySlot_performed")]
         [HarmonyPrefix]
+        [HarmonyPriority(Priority.Last)]
         static void tabPatch(PlayerControllerB __instance)
         {
             if (!__instance.IsOwner || !__instance.isPlayerControlled) return;
@@ -85,6 +92,7 @@ namespace JetpackPocket.Patches
         // block pickup second heavy/2-handed item
         [HarmonyPatch("BeginGrabObject")]
         [HarmonyPrefix]
+        [HarmonyPriority(Priority.Last)]
         static bool BeginGrabObjectPatch(PlayerControllerB __instance)
         {
             if (JetpackPocketPatchBase.instance.JetpackPocketConfigEntry.Value) return true;
@@ -116,11 +124,12 @@ namespace JetpackPocket.Patches
 
         private static void UpdateHUD(PlayerControllerB __instance)
         {
-            HUDManager.Instance.holdingTwoHandedItem.enabled = JetpackHelper.HasTwoHanded(__instance) && !JetpackPocketPatchBase.instance.JetpackPocketConfigEntry.Value;
+            HUDManager.Instance.holdingTwoHandedItem.enabled = (JetpackHelper.HasTwoHanded(__instance) && !JetpackHelper.HasJetpack(__instance)) || (JetpackHelper.HasTwoHanded(__instance) && JetpackHelper.HasJetpack(__instance) && !JetpackPocketPatchBase.instance.JetpackPocketConfigEntry.Value);
         }
 
         [HarmonyPatch("SwitchToItemSlot")]
         [HarmonyPostfix]
+        [HarmonyPriority(Priority.Last)]
         static void SwitchToItem(PlayerControllerB __instance)
         {
             JetpackHelper.Rescan(__instance);
