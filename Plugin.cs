@@ -29,6 +29,10 @@ namespace JetpackPocket
             logSource = BepInEx.Logging.Logger.CreateLogSource(ModInfo.modGUID);
 
             JetpackPocketConfigEntry = Config.Bind("General", "Carry multiple two-handed items", false, "Enables carrying multiple two-handed items at the same time while having a jetpack.");
+            JetpackPocketConfigEntry.SettingChanged += (sender, args) =>
+            {
+                JetpackHelper.UpdateHUD();
+            };
             var checkbox = new BoolCheckBoxConfigItem(JetpackPocketConfigEntry, new BoolCheckBoxOptions
             {
                 RequiresRestart = false

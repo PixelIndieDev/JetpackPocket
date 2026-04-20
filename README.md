@@ -1,6 +1,8 @@
 # JetpackPocket
 A simple mod that allows you to switch items while carrying a two-handed item, as long as you have a jetpack in your inventory. This lets you pocket a two-handed item and use your jetpack at the same time, making jetpacks a lot more useful.
 
+![Gif of a player switching to controlling the jetpack from carrying a two-handed item](https://github.com/PixelIndieDev/JetpackPocket/blob/main/Docs/preview_switchingToJetpackFromLargeItem.gif?raw=true)
+
 ## Installation
 1. Install `BepInEx`
 2. Install `LethalConfig`

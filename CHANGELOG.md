@@ -1,6 +1,7 @@
 ## v1.2.0
 - Fixed an issue where this mod’s functions could be overridden by other mods
-- Fixed the 'hands full' message not being visible when not having a jetpack
+- Fixed the 'Hands Full' message not being visible when not having a jetpack
+- Fixed the 'Hands Full' message not being updated when changing settings
 
 ## v1.1.0
 - Fixed an issue where the "Hands Full" message would display when switching to a two-handed item while holding a jetpack

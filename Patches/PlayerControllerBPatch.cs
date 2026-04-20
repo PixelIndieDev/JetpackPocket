@@ -15,7 +15,7 @@ namespace JetpackPocket.Patches
         static void GrabObjectClientRpcPatch(PlayerControllerB __instance)
         {
             JetpackHelper.Rescan(__instance);
-            UpdateHUD(__instance);
+            JetpackHelper.UpdateHUD(__instance);
         }
 
         [HarmonyPatch("ThrowObjectClientRpc")]
@@ -24,7 +24,7 @@ namespace JetpackPocket.Patches
         static void ThrowObjectClientRpcPatch(PlayerControllerB __instance)
         {
             JetpackHelper.Rescan(__instance);
-            UpdateHUD(__instance);
+            JetpackHelper.UpdateHUD(__instance);
         }
 
         [HarmonyPatch("PlaceObjectClientRpc")]
@@ -33,7 +33,7 @@ namespace JetpackPocket.Patches
         static void PlaceObjectClientRpcPatch(PlayerControllerB __instance)
         {
             JetpackHelper.Rescan(__instance);
-            UpdateHUD(__instance);
+            JetpackHelper.UpdateHUD(__instance);
         }
 
         [HarmonyPatch("DropAllHeldItems")]
@@ -42,7 +42,7 @@ namespace JetpackPocket.Patches
         static void DropAllHeldItemsPatch(PlayerControllerB __instance)
         {
             JetpackHelper.Rescan(__instance);
-            UpdateHUD(__instance);
+            JetpackHelper.UpdateHUD(__instance);
         }
 
         [HarmonyPatch("DespawnHeldObjectClientRpc")]
@@ -51,7 +51,7 @@ namespace JetpackPocket.Patches
         static void DespawnHeldObjectClientRpcPatch(PlayerControllerB __instance)
         {
             JetpackHelper.Rescan(__instance);
-            UpdateHUD(__instance);
+            JetpackHelper.UpdateHUD(__instance);
         }
 
         // item scrolling/switching
@@ -69,7 +69,7 @@ namespace JetpackPocket.Patches
                 __instance.twoHanded = false;
             }
 
-            UpdateHUD(__instance);
+            JetpackHelper.UpdateHUD(__instance);
         }
 
         [HarmonyPatch("UseUtilitySlot_performed")]
@@ -86,7 +86,7 @@ namespace JetpackPocket.Patches
                 __instance.twoHanded = false;
             }
 
-            UpdateHUD(__instance);
+            JetpackHelper.UpdateHUD(__instance);
         }
 
         // block pickup second heavy/2-handed item
@@ -115,16 +115,11 @@ namespace JetpackPocket.Patches
 
                 if (target != null && target.itemProperties.twoHanded)
                 {
-                    UpdateHUD(__instance);
+                    JetpackHelper.UpdateHUD(__instance);
                     return false;
                 }   
             }
             return true;
-        }
-
-        private static void UpdateHUD(PlayerControllerB __instance)
-        {
-            HUDManager.Instance.holdingTwoHandedItem.enabled = (JetpackHelper.HasTwoHanded(__instance) && !JetpackHelper.HasJetpack(__instance)) || (JetpackHelper.HasTwoHanded(__instance) && JetpackHelper.HasJetpack(__instance) && !JetpackPocketPatchBase.instance.JetpackPocketConfigEntry.Value);
         }
 
         [HarmonyPatch("SwitchToItemSlot")]
@@ -133,7 +128,7 @@ namespace JetpackPocket.Patches
         static void SwitchToItem(PlayerControllerB __instance)
         {
             JetpackHelper.Rescan(__instance);
-            UpdateHUD(__instance);
+            JetpackHelper.UpdateHUD(__instance);
         }
     }
 }

@@ -70,5 +70,24 @@ namespace JetpackPocket
             if (item == null) return false;
             return item.itemProperties.twoHanded;
         }
+
+        public static void UpdateHUD(PlayerControllerB __instance)
+        {
+            if (__instance != null)
+            {
+                bool twoHanded = JetpackHelper.HasTwoHanded(__instance);
+                bool hasJetpack = JetpackHelper.HasJetpack(__instance);
+                HUDManager.Instance.holdingTwoHandedItem.enabled = (twoHanded && !hasJetpack) || (twoHanded && hasJetpack && !JetpackPocketPatchBase.instance.JetpackPocketConfigEntry.Value);
+            }
+        }
+
+        public static void UpdateHUD()
+        {
+            var player = GameNetworkManager.Instance.localPlayerController;
+            if (player != null)
+            {
+                UpdateHUD(player);
+            }
+        }
     }
 }
