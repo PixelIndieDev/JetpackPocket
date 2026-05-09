@@ -8,6 +8,8 @@ namespace JetpackPocket.Patches
     [HarmonyPatch(typeof(PlayerControllerB))]
     internal class PlayerControllerBPatch
     {
+        const int objectMask = 1073742656;
+
         // item switch states
         [HarmonyPatch("GrabObjectClientRpc")]
         [HarmonyPostfix]
@@ -95,14 +97,13 @@ namespace JetpackPocket.Patches
         [HarmonyPriority(Priority.Last)]
         static bool BeginGrabObjectPatch(PlayerControllerB __instance)
         {
-            if (JetpackPocketPatchBase.instance.JetpackPocketConfigEntry.Value) return true;
+            if (ConfigSync.SyncedCarryMultipleTwoHanded) return true;
 
             if (__instance.twoHanded) return true;
 
             if (!__instance.IsOwner || !__instance.isPlayerControlled) return true;
 
             Ray interactRay = new Ray(__instance.gameplayCamera.transform.position, __instance.gameplayCamera.transform.forward);
-            const int objectMask = 1073742656;
             if (!Physics.Raycast(interactRay, out RaycastHit hit, __instance.grabDistance, objectMask) || hit.collider.gameObject.layer == 8 || hit.collider.tag != "PhysicsProp" || __instance.sinkingValue > 0.73f || Physics.Linecast(__instance.gameplayCamera.transform.position, hit.collider.transform.position + __instance.transform.up * 0.16f, 1073741824, QueryTriggerInteraction.Ignore))
             {
                 return true;
@@ -129,6 +130,25 @@ namespace JetpackPocket.Patches
         {
             JetpackHelper.Rescan(__instance);
             JetpackHelper.UpdateHUD(__instance);
+        }
+
+        [HarmonyPatch("SetHoverTipAndCurrentInteractTrigger")]
+        [HarmonyPostfix]
+        [HarmonyPriority(Priority.Last)]
+        static void SetHoverTipPatch(PlayerControllerB __instance)
+        {
+            if (!__instance.IsOwner || !__instance.isPlayerControlled) return;
+            if (ConfigSync.SyncedCarryMultipleTwoHanded) return;
+            if (!JetpackHelper.HasTwoHanded(__instance)) return;
+
+            Ray ray = new Ray(__instance.gameplayCamera.transform.position, __instance.gameplayCamera.transform.forward);
+            if (!Physics.Raycast(ray, out RaycastHit hit, __instance.grabDistance, objectMask)) return;
+            if (hit.collider.gameObject.layer == 8 || hit.collider.tag != "PhysicsProp") return;
+
+            GrabbableObject hovered = hit.collider.transform.gameObject.GetComponent<GrabbableObject>();
+            if (hovered == null || !hovered.itemProperties.twoHanded) return;
+
+            __instance.cursorTip.text = "Can't carry more: hands full!";
         }
     }
 }

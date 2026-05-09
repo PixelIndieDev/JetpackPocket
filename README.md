@@ -17,6 +17,16 @@ A simple mod that allows you to switch items while carrying a two-handed item, a
 - Does not affect the jetpack's own behaviour or controls
 - Does not affect any other item interactions
 
+## How to use
+1. Pick up a jetpack
+2. Switch to an empty slot
+3. Pick up two-handed item
+    ### Carrying multiple two-handed items
+    > The following steps require the 'Carry multiple two-handed items' setting to be enabled
+4. Switch from your held two-handed item to another empty inventory slot
+5. Pick up another two-handed item
+6. Repeat as needed
+
 ## Configuration
 All settings are available in the LethalConfig menu in-game.
 

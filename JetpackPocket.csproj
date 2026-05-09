@@ -43,6 +43,9 @@
     <Reference Include="LethalConfig">
       <HintPath>D:\ThunderStore Data\LethalCompany\cache\AinaVT-LethalConfig\1.4.6\plugins\LethalConfig\LethalConfig.dll</HintPath>
     </Reference>
+    <Reference Include="LethalNetworkAPI">
+      <HintPath>D:\ThunderStore Data\LethalCompany\profiles\ModCreationTesting\BepInEx\plugins\xilophor-LethalNetworkAPI\LethalNetworkAPI\LethalNetworkAPI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -72,7 +75,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigSync.cs" />
     <Compile Include="JetpackHelper.cs" />
+    <Compile Include="Patches\GameNetworkManagerPatch.cs" />
     <Compile Include="Patches\NetworkPatch.cs" />
     <Compile Include="Patches\PlayerControllerBPatch.cs" />
     <Compile Include="Plugin.cs" />

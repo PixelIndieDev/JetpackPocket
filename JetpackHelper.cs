@@ -1,4 +1,5 @@
 ﻿using GameNetcodeStuff;
+using JetpackPocket.Patches;
 
 namespace JetpackPocket
 {
@@ -7,7 +8,7 @@ namespace JetpackPocket
         public struct JetpackState
         {
             public bool HasJetpack;
-            public int HasTwoHandedItem; //bool uses less memory, but I want to make sure that it work even when the player somehow picks up multiple 2-handed items.
+            public int HasTwoHandedItem;
         }
 
         private static readonly System.Collections.Generic.Dictionary<ulong, JetpackState> PlayerDictionary = new System.Collections.Generic.Dictionary<ulong, JetpackState>();
@@ -73,11 +74,11 @@ namespace JetpackPocket
 
         public static void UpdateHUD(PlayerControllerB __instance)
         {
-            if (__instance != null)
+            if (__instance != null && __instance.IsOwner)
             {
                 bool twoHanded = JetpackHelper.HasTwoHanded(__instance);
                 bool hasJetpack = JetpackHelper.HasJetpack(__instance);
-                HUDManager.Instance.holdingTwoHandedItem.enabled = (twoHanded && !hasJetpack) || (twoHanded && hasJetpack && !JetpackPocketPatchBase.instance.JetpackPocketConfigEntry.Value);
+                HUDManager.Instance.holdingTwoHandedItem.enabled = (twoHanded && !hasJetpack) || (twoHanded && hasJetpack && !ConfigSync.SyncedCarryMultipleTwoHanded);
             }
         }
 

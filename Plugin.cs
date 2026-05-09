@@ -6,11 +6,13 @@ using JetpackPocket.Patches;
 using LethalConfig;
 using LethalConfig.ConfigItems;
 using LethalConfig.ConfigItems.Options;
+using Unity.Netcode;
 
 namespace JetpackPocket
 {
     [BepInPlugin(ModInfo.modGUID, ModInfo.modName, ModInfo.modVersion)]
     [BepInDependency("ainavt.lc.lethalconfig")]
+    [BepInDependency("LethalNetworkAPI")]
     public class JetpackPocketPatchBase : BaseUnityPlugin
     {
         private readonly Harmony harmony = new Harmony(ModInfo.modGUID);
@@ -31,6 +33,11 @@ namespace JetpackPocket
             JetpackPocketConfigEntry = Config.Bind("General", "Carry multiple two-handed items", false, "Enables carrying multiple two-handed items at the same time while having a jetpack.");
             JetpackPocketConfigEntry.SettingChanged += (sender, args) =>
             {
+                if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsHost)
+                {
+                    ConfigSync.SendToClients(JetpackPocketConfigEntry.Value);
+                }
+
                 JetpackHelper.UpdateHUD();
             };
             var checkbox = new BoolCheckBoxConfigItem(JetpackPocketConfigEntry, new BoolCheckBoxOptions
@@ -42,6 +49,8 @@ namespace JetpackPocket
             harmony.PatchAll(typeof(JetpackPocketPatchBase));
             harmony.PatchAll(typeof(PlayerControllerBPatch));
             harmony.PatchAll(typeof(NetworkPatch));
+
+            ConfigSync.SetNetworkMessage();
 
             logSource.LogInfo(ModInfo.modName + " (version - " + ModInfo.modVersion + ")" + ": patches applied successfully");
         }

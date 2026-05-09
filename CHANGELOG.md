@@ -1,3 +1,8 @@
+## v1.3.0
+- The 'Carry multiple two-handed items' config setting is now synced between host and clients (host now has authority over the value)
+- Added a "Can't carry more: hands full!" tooltip when hovering over two-handed items while the carrying a two-handed item and 'Carry multiple two-handed items' is set to false
+- Fixed an issue that caused the "Hands full" message to appear on the HUDs of other clients
+
 ## v1.2.0
 - Fixed an issue where this mod’s functions could be overridden by other mods
 - Fixed the 'Hands Full' message not being visible when not having a jetpack
